@@ -31,11 +31,12 @@ label {
     justify-content: space-between;
 }
 
+/* 
 input[type=checkbox] {
+    appearance: none;
+    background-color: black;
     color: #64D77E;
-}
-
-input[type="checkbox"]:checked {}
+} */
 
 /* 
 .without_ampm::-webkit-datetime-edit-ampm-field {
