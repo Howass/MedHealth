@@ -1,61 +1,62 @@
-import React, {useState, useEffect} from 'react'
-import GoogleMapReact from 'google-map-react'
-import { Icon } from '@iconify/react'
-import locationIcon from '@iconify/icons-mdi/map-marker'
-
-import './map.css'
+import React, { useState } from "react";
+import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 
 
 
-const LocationPin = ({ text }) => (
-  <div className="pin">
-    <Icon icon={locationIcon} className="pin-icon" />
-    <p className="pin-text">{text}</p>
-  </div>
-)
+function Map({ location }) {
+  const markers = [
+    {
+      id: 1,
+      name: "My Location",
+      position: { lat: location.lat, lng: location.lng }
+    },
+    {
+      id: 2,
+      name: "The Ottawa Hospital General Campus",
+      position: { lat: 45.4009, lng: -75.6475 }
+    },
+    {
+      id: 3,
+      name: "The Ottawa Hospital Civic Campus",
+      position: { lat: 45.3929, lng: -75.7217 }
+    }
+  ];
+  const [activeMarker, setActiveMarker] = useState(null);
 
-const Map = ({ location, zoomLevel }) => {
+  const handleActiveMarker = (marker) => {
+    if (marker === activeMarker) {
+      return;
+    }
+    setActiveMarker(marker);
+  };
 
-  const [coordinates, setCoordinates] = useState({ latitude: "43.793607699999995", longitude: "-79.3284823" });
-
-  function handleChange(event) {
-    location.onChange(event.target.value);
- } 
-
-
-  const getUserAddress = async () => {
-    const response = await fetch(`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&type=hospital&key=AIzaSyBC5EcGadNT383cmuUgw0Xq27a40U_3CQI`);
-    console.log(response)
-    const data = await response.json();
-    console.log(data)
-    //setUserAddress(data.results[0].formatted_address);
-  }
-
-  useEffect(() => {
-    //console.log(coordinates.latitude + "" + coordinates.longitude)
-    getUserAddress();
-    //getHospitalInfo();
-  });
+  const handleOnLoad = (map) => {
+    const bounds = new google.maps.LatLngBounds();
+    markers.forEach(({ position }) => bounds.extend(position));
+    map.fitBounds(bounds);
+  };
 
   return (
-    <div className="map">
+    <GoogleMap
+      onLoad={handleOnLoad}
+      onClick={() => setActiveMarker(null)}
+      mapContainerStyle={{ width: "100vw", height: "100vh" }}
+    >
+      {markers.map(({ id, name, position }) => (
+        <Marker
+          key={id}
+          position={position}
+          onClick={() => handleActiveMarker(id)}
+        >
+          {activeMarker === id ? (
+            <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+              <div>{name}</div>
+            </InfoWindow>
+          ) : null}
+        </Marker>
+      ))}
+    </GoogleMap>
+  );
+}
 
-    <div className="google-map">
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: 'AIzaSyBC5EcGadNT383cmuUgw0Xq27a40U_3CQI' }}
-        defaultCenter={location}
-        defaultZoom={zoomLevel}
-      >
-        <LocationPin
-          lat={location.lat}
-          lng={location.lng}
-          text={location.address}
-        />
-
-       
-      </GoogleMapReact>
-    </div>
-  </div>
-  )};
-
-export default Map
+export default Map;
