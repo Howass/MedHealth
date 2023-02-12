@@ -12,6 +12,7 @@ from .serializers import NoteSerializer
 from base.models import Note, Patient, Provider
 
 from django.contrib.auth.models import User
+from geopy.geocoders import Nominatim
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -58,21 +59,23 @@ def createNote(request):
 
 @api_view(['PUT'])
 def putPatient(request):
-    username = User.objects.get(username=request.data.username)
+    print(request.data)
+    username = User.objects.get(username=request.data['user'])
     try:
         username = Patient.objects.get(user=username)
     except:
-        username = Provider.objects.create(user=username)
+        username = Patient.objects.create(user=username)
+    print(request.data)
     patient = Patient.objects.get(user=username)
     patient.DOB = request.data['DOB']
     patient.sex = request.data['sex']
-    patient.alergy = request.data['alergy']
+    patient.alergy = request.data['alergies']
     patient.history = request.data['history']
     patient.doctor = request.data['doctor']
     patient.email = request.data['email']
-    patient.phone_number = request.data['phone_number']
-    patient.health_card = request.data['health_card']
-    patient.emergency_contact = request.data['emergency_contact']
+    patient.phone_number = request.data['phone']
+    patient.health_card = request.data['healthCard']
+    patient.emergency_contact = request.data['contact']
     patient.save()
     return Response()
 

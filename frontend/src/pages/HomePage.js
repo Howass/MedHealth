@@ -39,24 +39,58 @@ const HomePage = () => {
   //     }
   //   })
   // }
+  const [DOB, setDOB] = useState(new Date())
+  const [sex, setSex] = useState("Male")
+  const [alergies, setAlergies] = useState()
+  const [history, setHistory] = useState()
+  const [doctor, setDoctor] = useState()
+  const [email, setEmail] = useState()
+  const [phone, setPhone] = useState()
+  const [healthCard, setHealthCard] = useState()
+  const [contact, setContact] = useState()
+
+
+  const handleSubmit = async (e) => {
+      e.preventDefault()
+      let data = {
+        'user': user.username,
+        'DOB': DOB,
+        'sex': sex,
+        'alergies': alergies,
+        'history': history,
+        'doctor': doctor,
+        'email': email,
+        'phone': phone,
+        'healthCard': healthCard,
+        'contact': contact,
+      }
+      await fetch('http://127.0.0.1:8000/api/patient/', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // the data to send
+            body: JSON.stringify(data)
+          })
+  }
 
   return (
     <div>
-      {user ? <p>ok</p> : <p>f</p>}
-      <form>
-        <input type="text"></input>
-        <select name="cars" id="cars">
+      {user ?
+      <form onSubmit={handleSubmit}>
+        <input type="date" onChange={(e)=>{setDOB(e.target.value)}}></input>
+        <select name="Sex" onChange={(e)=>{setSex(e.target.value)}}>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        <input type="text" placeholder="alergies"></input>
-        <input type="text" placeholder="medical histroy"></input>
-        <input type="text" placeholder="doctor"></input>
-        <input type="text" placeholder="email"></input>
-        <input type="number" placeholder="phone number"></input>
-        <input type="number" placeholder="health card #"></input>
-        <input type="number" placeholder="emergency contact"></input>
+        <input type="text" placeholder="alergies" onChange={(e)=>{setAlergies(e.target.value)}}></input>
+        <input type="text" placeholder="medical histroy" onChange={(e)=>{setHistory(e.target.value)}}></input>
+        <input type="text" placeholder="doctor" onChange={(e)=>{setDoctor(e.target.value)}}></input>
+        <input type="text" placeholder="email" onChange={(e)=>{setEmail(e.target.value)}}></input>
+        <input type="number" placeholder="phone number" onChange={(e)=>{setPhone(e.target.value)}}></input>
+        <input type="number" placeholder="health card #" onChange={(e)=>{setHealthCard(e.target.value)}}></input>
+        <input type="number" placeholder="emergency contact" onChange={(e)=>{setContact(e.target.value)}}></input>
+        <button type="submit">submit</button>
       </form>
+      : <></>}
       {/* user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     DOB = models.DateTimeField(auto_now=True)
     sex = models.CharField(max_length=10, default='Individual')
@@ -67,7 +101,6 @@ const HomePage = () => {
     phone_number = models.IntegerField(default=0)
     health_card = models.IntegerField(default=0)
     emergency_contact = models.IntegerField(default=0) */}
-
 
 
       <p>You are logged to the home page!</p>

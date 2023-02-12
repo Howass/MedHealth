@@ -1,3 +1,15 @@
+form {
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+}
+
 input {
-    
+    border-radius: 0px; border-color: rgb(52, 147, 231); border-style: solid;
+    padding: 3pt;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-left: 0rem;
+    margin: 0.3rem;
+    font-size: 1em;
 }
