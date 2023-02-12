@@ -1,31 +1,26 @@
 import React, { useState } from "react";
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 
-const markers = [
-  {
-    id: 1,
-    name: "University Ottawa",
-    position: { lat: 45.4231, lng: -75.6831 }
-  },
-  {
-    id: 2,
-    name: "The Ottawa Hospital General Campus",
-    position: { lat: 45.4009, lng: -75.6475 }
-  },
-  {
-    id: 3,
-    name: "The Ottawa Hospital Civic Campus",
-    position: { lat: 45.3929, lng: -75.7217 }
-  },
-  {
-    id: 5,
-    name: "Test point 1",
-    position: { lat: 25, lng: -75.7217 }
 
-  }
-];
 
-function Map() {
+function Map({location}) {
+  const markers = [
+    {
+      id: 1,
+      name: "My Location",
+      position: { lat: location.lat, lng: location.lng }
+    },
+    {
+      id: 2,
+      name: "The Ottawa Hospital General Campus",
+      position: { lat: 45.4009, lng: -75.6475 }
+    },
+    {
+      id: 3,
+      name: "The Ottawa Hospital Civic Campus",
+      position: { lat: 45.3929, lng: -75.7217 }
+    }
+  ];
   const [activeMarker, setActiveMarker] = useState(null);
 
   const handleActiveMarker = (marker) => {
