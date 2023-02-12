@@ -19,7 +19,18 @@ function Map({ location }) {
       id: 3,
       name: "The Ottawa Hospital Civic Campus",
       position: { lat: 45.3929, lng: -75.7217 }
-    }
+    },
+    {id:4,
+      name:"St. Marys Hospital",
+    position:{lat:43.437825,lng:-80.503555}
+      },
+    {id:5,
+    name:"Kingston General Hospital site",
+  position:{lat:44.223336,lng:-76.494124}},
+  {id:6,
+  name:" Montreal jewish general hospital",
+  position:{lat: 45.497091,lng: -73.630243}}
+  
   ];
   const [activeMarker, setActiveMarker] = useState(null);
 
