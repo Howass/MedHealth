@@ -11,9 +11,9 @@ import './app.css'
 const App = () => {
 
   const [location, setLocation] = useState({
-    address: '1600 Amphitheatre Parkway, Mountain View, california.',
-    lat: 37.42216,
-    lng: -122.08427,
+    
+    lat: 45.4231,
+    lng: -75.6831,
   })
   
   useEffect(() => {

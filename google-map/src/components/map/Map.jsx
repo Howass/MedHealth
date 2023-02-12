@@ -51,6 +51,9 @@ const Map = ({ location, zoomLevel }) => {
           lng={location.lng}
           text={location.address}
         />
+        <LocationPin
+        text="big daddy's bourbon street bistro"
+         />
 
        
       </GoogleMapReact>
