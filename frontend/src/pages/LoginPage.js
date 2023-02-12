@@ -1,13 +1,18 @@
 import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
+import Header from '../components/header/Header'
+import LogoVertical from '../assets/logo-vertical.png'
+import './login-page.css'
 
 const LoginPage = () => {
-    let {loginUser} = useContext(AuthContext)
+  let {loginUser} = useContext(AuthContext)
   return (
-    <div>
-        <form onSubmit={loginUser}>
-            <input type="text" name="username" placeholder="Enter Username"></input>
-            <input type="text" name="password" placeholder="Enter Password"></input>
+    <div className='login-container'>
+      <h3>Login</h3>
+        <img src={LogoVertical} className='home-logo' />
+        <form onSubmit={loginUser} className="login-form">
+            <input type="text" name="username" placeholder="Username"/>
+            <input type="password" name="password" placeholder="Password"/>
             <input type="submit"/>
         </form>
     </div>

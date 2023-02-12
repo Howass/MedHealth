@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import "./home-page.css"
-
+import Header from '../components/header/Header'
+import {useNavigate} from 'react-router-dom';
 
 const HomePage = () => {
   let [notes, setNotes] = useState([])
   let {authTokens, logoutUser} = useContext(AuthContext)
   let {user} = useContext(AuthContext)
+
+  const history = useNavigate();
 
   useEffect(() => {
     getNotes()
@@ -42,7 +45,7 @@ const HomePage = () => {
   const [DOB, setDOB] = useState(new Date())
   const [sex, setSex] = useState("Male")
   const [alergies, setAlergies] = useState()
-  const [history, setHistory] = useState()
+  const [medHistory, setMedHistory] = useState()
   const [doctor, setDoctor] = useState()
   const [email, setEmail] = useState()
   const [phone, setPhone] = useState()
@@ -57,7 +60,7 @@ const HomePage = () => {
         'DOB': DOB,
         'sex': sex,
         'alergies': alergies,
-        'history': history,
+        'history': medHistory,
         'doctor': doctor,
         'email': email,
         'phone': phone,
@@ -70,10 +73,13 @@ const HomePage = () => {
             // the data to send
             body: JSON.stringify(data)
           })
+      history('/condition/');
   }
 
   return (
-    <div>
+    <>
+    <Header />
+    <div className='information-container'>
       {user ?
       <form onSubmit={handleSubmit}>
         <input type="date" onChange={(e)=>{setDOB(e.target.value)}}></input>
@@ -81,14 +87,14 @@ const HomePage = () => {
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        <input type="text" placeholder="alergies" onChange={(e)=>{setAlergies(e.target.value)}}></input>
-        <input type="text" placeholder="medical histroy" onChange={(e)=>{setHistory(e.target.value)}}></input>
-        <input type="text" placeholder="doctor" onChange={(e)=>{setDoctor(e.target.value)}}></input>
-        <input type="text" placeholder="email" onChange={(e)=>{setEmail(e.target.value)}}></input>
-        <input type="number" placeholder="phone number" onChange={(e)=>{setPhone(e.target.value)}}></input>
-        <input type="number" placeholder="health card #" onChange={(e)=>{setHealthCard(e.target.value)}}></input>
-        <input type="number" placeholder="emergency contact" onChange={(e)=>{setContact(e.target.value)}}></input>
-        <button type="submit">submit</button>
+        <input type="text" placeholder="Allergies" onChange={(e)=>{setAlergies(e.target.value)}}></input>
+        <input type="text" placeholder="Medical History" onChange={(e)=>{setMedHistory(e.target.value)}}></input>
+        <input type="text" placeholder="Family Doctor" onChange={(e)=>{setDoctor(e.target.value)}}></input>
+        <input type="text" placeholder="Email" onChange={(e)=>{setEmail(e.target.value)}}></input>
+        <input type="number" placeholder="Phone Number" onChange={(e)=>{setPhone(e.target.value)}}></input>
+        <input type="number" placeholder="Health Card #" onChange={(e)=>{setHealthCard(e.target.value)}}></input>
+        <input type="number" placeholder="Emergency Contact" onChange={(e)=>{setContact(e.target.value)}}></input>
+        <button type="submit">Submit</button>
       </form>
       : <></>}
       {/* user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
@@ -103,9 +109,10 @@ const HomePage = () => {
     emergency_contact = models.IntegerField(default=0) */}
 
 
-      <p>You are logged to the home page!</p>
+      {/* <p>You are logged to the home page!</p> */}
       {/* <button onClick={createNote} >Create Note</button> */}
     </div>
+    </>
   )
 }
 

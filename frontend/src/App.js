@@ -5,7 +5,10 @@ import { AuthProvider } from './context/AuthContext';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import Header from './components/Header';
+import Header from './components/header/Header';
+import Home from './components/home/Home';
+import ConditionForm from './components/condition-form/ConditionForm';
+import Output from './components/output/Output';
 
 function App() {
   return (
@@ -18,10 +21,13 @@ function App() {
         </AuthProvider>
       </Routes> */}
       <AuthProvider>
-        <Header/>
+        {/* <Header/> */}
         <Routes>
-            <Route path="/" element={<HomePage />} exact />
-            <Route path="/login" element={<LoginPage />} />          
+            <Route path="/" element={<Home />} exact />
+            <Route path="/login" element={<LoginPage />} /> 
+            <Route path="/condition" element={<ConditionForm />} />
+            <Route path="/information" element={<HomePage />} />
+            <Route path="/output" element={<Output />} />
         </Routes>
       </AuthProvider>
     </div>
