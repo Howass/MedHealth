@@ -1,0 +1,23 @@
+h1 {
+    color: #64D77E;
+    font-size: 5rem;
+    -webkit-text-stroke-width: 4px;
+    -webkit-text-stroke-color: black;
+    padding: 1rem;
+}
+
+p {
+    width: 50%;
+    color: #64D77E;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-logo {
+    width: 30%;
+    margin: 2rem;
+}
