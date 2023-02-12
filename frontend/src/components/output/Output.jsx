@@ -69,6 +69,7 @@ const Output = () => {
             alert("Geolocation is not supported by this browser.");
     }
     return <>
+        <Header />
         <div className="App">
             <button className="button" onClick={() => getLocation()}>Locate Me</button>
 

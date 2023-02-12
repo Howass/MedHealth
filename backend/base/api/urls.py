@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('patient/', views.putPatient),
     path('provider/', views.putProvider),
+    path('nearest/', views.getNearest),
 
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

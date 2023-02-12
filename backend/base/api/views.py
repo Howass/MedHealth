@@ -8,7 +8,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
-from .serializers import NoteSerializer
+from .serializers import NoteSerializer, ProviderSerializer
 from base.models import Note, Patient, Provider
 
 from django.contrib.auth.models import User
@@ -102,3 +102,18 @@ def putProvider(request):
     provider.services = request.data['services']
     provider.save()
     return Response()
+
+@api_view(['PUT'])
+def getNearest(request):
+    type = []
+    for type_ in request.data['types']:
+        type.append(type_)
+
+    all_objects = Provider.objects.all()
+    matched = []
+    for i in range(len(all_objects)):
+        if (all_objects[i].services.split(' ')[0] in type):
+            matched.append(all_objects[i])
+    serializer = ProviderSerializer(matched, many=True)
+
+    return Response(serializer.data)

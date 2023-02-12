@@ -127,35 +127,40 @@ const ConditionForm = () => {
     switch (conditionType) {
       case "BrokenBone":
         if (bleeding) {
-          data = { providers: ["911"] };
+          data = { types: ["911"] };
         } else if (compoundFracture) {
-          data = { providers: ["Emergency", "Urgent"] };
+          data = { types: ["Emergency", "Urgent"] };
         } else {
-          data = { providers: ["Urgent", "Emergency"] };
+          data = { types: ["Urgent", "Emergency"] };
         }
         break;
       case "Infection":
         if (time > 14) {
-          data = { providers: ["Walkin"] };
+          data = { types: ["Walkin"] };
         } else {
-          data = { providers: ["Pharmacy", "Walkin"] };
+          data = { types: ["Pharmacy", "Walkin"] };
         }
         break;
       case "ChestPain":
         if (heartHistory || severity > 5) {
-          data = { providers: ["911"] };
+          data = { types: ["911"] };
         } else {
-          data = { providers: ["Emergency"] };
+          data = { types: ["Emergency"] };
         }
         break;
       default:
         break;
     }
-    if (data.providers[0] === "911") {
+    if (data.types[0] === "911") {
       handleEmergency();
     } else {
-      //const response = await fetch("https://localhost:8000/api");
-      //console.log(response)
+      const response = await fetch('http://127.0.0.1:8000/api/nearest/', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        // the data to send
+        body: JSON.stringify(data)
+      })
+      //console.log(response)sss
       history('/output/')
     }
   }
